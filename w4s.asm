@@ -24,12 +24,134 @@ main:
 	;call ClearScreen
 	;call LogIn
 	call ClearScreen
-mainLoop:
+	
 	mov ah, 2
-	; implement weed 4 spacer
+	mov bh, 0
+	mov dh, 10
+	mov dl, 24
 	int 10h
 	
+	mov si, msg
+	call PrintString
+	
+	mov ah, 2
+	mov bh, 0
+	mov dh, 11
+	mov dl, 32
+	int 10h
+	
+	mov si, msg2
+	call PrintString
+	
+	mov ah, 2
+	mov bh, 0
+	mov dh, 13
+	mov dl, 27
+	int 10h
+	
+	mov si, legz
+	call PrintString
+mainLoop:
+	mov ah, 2
+	mov bh, 0
+	mov dh, 11
+	mov dl, 42
+	int 10h
+	
+	mov ah, 9
+	mov al, ' '
+	mov bh, 0
+	mov bl, 0x1F
+	mov cx, 33
+	int 10h
+	
+	call PrintScore
+	
+	mov ah, 0
+	int 16h
+	
+	cmp ah, 0x4B
+	jne CheckPrawa
+	
+	mov al, [whLeg]
+	cmp al, 0
+	jne CheckPrawa
+	
+	mov al, [score]
+	inc al
+	mov [score], al
+	
+	mov al, 1
+	mov [whLeg], al
+	jmp AfterArrows
+	
+CheckPrawa:
+	cmp ah, 0x4D
+	jne AfterArrows
+	
+	mov al, [whLeg]
+	cmp al, 1
+	jne AfterArrows
+	
+	mov al, [score]
+	inc al
+	mov [score], al
+	
+	mov al, 0
+	mov [whLeg], al
+	
+AfterArrows:
+	
+	mov ah, 0x86
+	mov cx, 3
+	mov dx, 0xD090
+	int 15h
+	
 	jmp mainLoop
+
+PrintScore:
+	mov dx, 0
+	mov ax, [score]
+	mov bx, 10
+	div bx
+	
+	mov cx, ax
+	mov al, '0'
+	add al, dl
+	mov [scoree+3], al
+	mov ax, cx
+	
+	mov dx, 0
+	div bx
+	
+	mov cx, ax
+	mov al, '0'
+	add al, dl
+	mov [scoree+2], al
+	mov ax, cx
+	
+	mov dx, 0
+	div bx
+	
+	mov cx, ax
+	mov al, '0'
+	add al, dl
+	mov [scoree+1], al
+	mov ax, cx
+	
+	mov dx, 0
+	div bx
+	
+	mov cx, ax
+	mov al, '0'
+	add al, dl
+	mov [scoree], al
+	mov ax, cx
+	
+	mov si, scoree
+	call PrintString
+	
+	ret
 
 LogIn:
 	mov ah, 2
@@ -244,5 +366,13 @@ username: db "        ", 0
 
 loadMsg: db "Loading...", 0
 loadProg: db 0
+
+msg: db "U Weed To Spacer! With Ur legz", 0
+msg2: db "Ur score: ", 0
+
+score: db 0,0
+scoree: db "0000", 0
+legz: db "Lewa Noga     Prawa Noga", 0
+whLeg: db 0
 
 times (512*6)-($-$$) db 0
