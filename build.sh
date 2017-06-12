@@ -1,2 +1,2 @@
-nasm naos.asm -f bin -o naos.bin
-qemu-system-i386 naos.bin -k pl
+nasm w4s.asm -f bin -o w4s.bin
+qemu-system-i386 w4s.bin -k pl
