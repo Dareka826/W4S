@@ -382,7 +382,7 @@ unamemsg: db "Username", 0
 username: db "        ", 0
 
 loadMsg: db "Loading...", 0
-loadProg: db 0
+loadProg: db 0, 0
 
 msg: db "U Weed To Spacer! With Ur legz", 0
 msg2: db "Ur score: ", 0
