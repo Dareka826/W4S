@@ -1,6 +1,7 @@
 [bits 16]
 [org 0x7C00]
 
+;comment
 mov ah, 2
 mov al, 5
 mov ch, 0
