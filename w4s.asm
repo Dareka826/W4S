@@ -23,6 +23,8 @@ main:
 	call Load
 	call ClearScreen
 	call LogIn
+	
+	
 	call ClearScreen
 	
 	mov ah, 2
@@ -196,7 +198,7 @@ LogInLoop:
 	
 	mov bx, si
 	sub bx, username
-	cmp bx, 8
+	cmp bx, 9
 	je LogInEnd
 	
 	mov [si], al 
@@ -260,6 +262,19 @@ Load:
 	mov si, loadMsg
 	call PrintString
 	
+	mov ah, 2
+	mov bh, 0
+	mov dh, 12
+	mov dl, 1
+	int 10h
+	
+	mov ah, 9
+	mov al, ' '
+	mov bh, 0
+	mov bl, 0x77
+	mov cx, 78
+	int 10h
+	
 LoadLoop:
 	mov ah, 2
 	mov bh, 0
@@ -270,7 +285,7 @@ LoadLoop:
 	mov ah, 9
 	mov al, ' '
 	mov bh, 0
-	mov bl, 0xFF
+	mov bl, 0xEE
 	mov cx, [loadProg]
 	int 10h
 	
@@ -379,10 +394,10 @@ logoz: db "By MB", 0
 logoz2: db "& MJX", 0
 
 unamemsg: db "Username", 0
-username: db "        ", 0
+username: db "         ", 0
 
 loadMsg: db "Loading...", 0
-loadProg: db 0, 0
+loadProg: db 0,0
 
 msg: db "U Weed To Spacer! With Ur legz", 0
 msg2: db "Ur score: ", 0
@@ -392,6 +407,6 @@ scoree: db "0000", 0
 legz: db "Lewa Noga     Prawa Noga", 0
 whLeg: db 0
 
-uluser: db "u LUSER!", 0
+uluser: db "u LUZER!", 0
 
 times (512*6)-($-$$) db 0
