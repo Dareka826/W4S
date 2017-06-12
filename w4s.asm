@@ -75,7 +75,7 @@ mainLoop:
 	
 	mov al, [whLeg]
 	cmp al, 0
-	jne CheckPrawa
+	jne Przegryw
 	
 	mov al, [score]
 	inc al
@@ -91,7 +91,8 @@ CheckPrawa:
 	
 	mov al, [whLeg]
 	cmp al, 1
-	jne AfterArrows
+	jne Przegryw
+
 	
 	mov al, [score]
 	inc al
@@ -102,12 +103,28 @@ CheckPrawa:
 	
 AfterArrows:
 	
+	jmp mainLoop
+
+Przegryw:
+	call ClearScreen
+	
+	mov ah, 2
+	mov bl, 0
+	mov dh, 11
+	mov dl, 35
+	int 10h
+	
+	mov si, uluser
+	call PrintString
+	
 	mov ah, 0x86
-	mov cx, 3
-	mov dx, 0xD090
+	mov cx, 0x4C
+	mov dx, 0x4B40
 	int 15h
 	
-	jmp mainLoop
+	db 0x0ea
+    dw 0x0000
+    dw 0xffff
 
 PrintScore:
 	mov dx, 0
@@ -370,9 +387,11 @@ loadProg: db 0
 msg: db "U Weed To Spacer! With Ur legz", 0
 msg2: db "Ur score: ", 0
 
-score: db 0,0
+score: db 0, 0
 scoree: db "0000", 0
 legz: db "Lewa Noga     Prawa Noga", 0
 whLeg: db 0
+
+uluser: db "u LUSER!", 0
 
 times (512*6)-($-$$) db 0
