@@ -20,9 +20,9 @@ mov bl, 0
 int 10h
 
 main:
-	;call Load
-	;call ClearScreen
-	;call LogIn
+	call Load
+	call ClearScreen
+	call LogIn
 	call ClearScreen
 	
 	mov ah, 2
