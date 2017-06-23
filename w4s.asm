@@ -21,41 +21,8 @@ int 10h
 
 jmp main
 
-LoadHighScore:
-	pusha
-	mov ah, 2
-	mov al, 1
-	mov ch, 0
-	mov cl, 16
-	mov dh, 0
-	mov dl, 0x80
-	mov bx, buffer__
-	int 13h
-	mov ah, [buffer__]
-	mov [def], ah
-	mov ah, [buffer__+1]
-	mov [def+1], ah
-	mov si, def
-	call PrintString
-	popa
-	ret
-	
-WriteHighScores:
-	pusha
-	mov ah, [score]
-	mov [buffer__], ah
-	mov ah, [score+1]
-	mov [buffer__+1], ah
-	mov ah, 3
-	mov al, 1
-	mov ch, 0
-	mov cl, 16
-	mov dh, 0
-	mov dl, 0x80
-	mov bx, buffer__
-	int 13h
-	popa
-	ret
+%include "highscores.asm"
+
 main:
 	call Load
 	call ClearScreen
@@ -342,88 +309,7 @@ LoadLoop:
 LoadEnd:
 	ret
 
-ClearScreen:
-	mov ah, 2
-	mov bh, 0
-	mov dx, 0
-	int 10h
-	
-	mov ah, 9
-	mov al, ' '
-	mov bh, 0
-	mov bl, 0x8F
-	mov cx, 80
-	int 10h
-	
-	mov ah, 2
-	mov bh, 0
-	mov dh, 1
-	mov dl, 0
-	int 10h
-	
-	mov ah, 9
-	mov al, ' '
-	mov bh, 0
-	mov bl, 0x1F
-	mov cx, 0x730
-	int 10h
-	
-	mov ah, 2
-	mov bh, 0
-	mov dh, 24
-	mov dl, 0
-	int 10h
-	
-	mov ah, 9
-	mov al, ' '
-	mov bh, 0
-	mov bl, 0x8F
-	mov cx, 80
-	int 10h
-	
-	mov ah, 2
-	mov bh, 0
-	mov dx, 0
-	int 10h
-	
-	mov si, osName
-	call PrintString
-	
-	mov ah, 2
-	mov bh, 0
-	mov dh, 24
-	mov dl, 0
-	int 10h
-	
-	mov si, username
-	call PrintString
-	
-	mov ah, 2
-	mov bh, 0
-	mov dh, 1
-	mov dl, 0
-	int 10h
-	
-	ret
-
-PrintChar:
-	mov ah, 0xE
-	int 10h
-	
-	ret
-
-PrintString:
-PrintLoop:
-	mov al, [si]
-	inc si
-	
-	cmp al, 0
-	je PrintEnd
-	
-	call PrintChar
-	jmp PrintLoop
-PrintEnd:
-	ret
+%include "print.asm"
 
 osName: db "Weed 4 Spacer OS 2017", 0
 
