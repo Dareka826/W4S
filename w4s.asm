@@ -332,6 +332,8 @@ whLeg: db 0
 
 uluser: db "u LUZER!", 0
 
+buffer__: times 512 db 0
+
 times (512*15)-($-$$) db 0
 def: 	db 'a'
 		db 'A'
