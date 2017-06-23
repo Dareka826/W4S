@@ -311,7 +311,7 @@ LoadEnd:
 
 %include "print.asm"
 
-osName: db "Weed 4 Spacer OS 2017", 0
+osName: db "Weed 4 Spacer OS 2018-1 v1.1-kwasy",234,"_3 [NonPremium]", 0
 
 logoz: db "By MB", 0
 logoz2: db "& MJX", 0
