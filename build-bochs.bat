@@ -1,4 +1,4 @@
 @echo off
-nasm -f bin -o disk.anonyjous asm.asm
+nasm -f bin -o disk.anonyjous w4s.asm
 pause
 bochsrc.bxrc
