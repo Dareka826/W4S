@@ -19,6 +19,43 @@ mov al, 3
 mov bl, 0
 int 10h
 
+jmp main
+
+LoadHighScore:
+	pusha
+	mov ah, 2
+	mov al, 1
+	mov ch, 0
+	mov cl, 16
+	mov dh, 0
+	mov dl, 0x80
+	mov bx, buffer__
+	int 13h
+	mov ah, [buffer__]
+	mov [def], ah
+	mov ah, [buffer__+1]
+	mov [def+1], ah
+	mov si, def
+	call PrintString
+	popa
+	ret
+	
+WriteHighScores:
+	pusha
+	mov ah, [score]
+	mov [buffer__], ah
+	mov ah, [score+1]
+	mov [buffer__+1], ah
+	mov ah, 3
+	mov al, 1
+	mov ch, 0
+	mov cl, 16
+	mov dh, 0
+	mov dl, 0x80
+	mov bx, buffer__
+	int 13h
+	popa
+	ret
 main:
 	call Load
 	call ClearScreen
@@ -109,7 +146,7 @@ AfterArrows:
 
 Przegryw:
 	call ClearScreen
-	
+	call WriteHighScores
 	mov ah, 2
 	mov bl, 0
 	mov dh, 11
@@ -409,4 +446,8 @@ whLeg: db 0
 
 uluser: db "u LUZER!", 0
 
-times (512*6)-($-$$) db 0
+times (512*15)-($-$$) db 0
+def: 	db 'a'
+		db 'A'
+		db 0
+times (512*16)-($-$$) db 0
