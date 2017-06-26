@@ -116,10 +116,30 @@ Przegryw:
 	call WriteHighScores
 	mov ah, 2
 	mov bl, 0
-	mov dh, 11
+	mov dh, 7
 	mov dl, 35
 	int 10h
 	
+	call LoadHighScores
+	call PrintScore
+	mov ax, [score]
+	mov bx, [def]
+	
+	cmp ax, bx
+	jng .normal 
+	
+	mov si, new_high
+	mov ah, 2
+	mov bl, 0
+	mov dh, 8
+	mov dl, 35
+	int 10h
+	
+
+	
+	jmp .end__i
+	
+.normal:
 	mov si, uluser
 	call PrintString
 	
@@ -127,7 +147,7 @@ Przegryw:
 	mov cx, 0x4C
 	mov dx, 0x4B40
 	int 15h
-	
+.end__i:
 	db 0x0ea
     dw 0x0000
     dw 0xffff
@@ -331,7 +351,7 @@ legz: db "Lewa Noga     Prawa Noga", 0
 whLeg: db 0
 
 uluser: db "u LUZER!", 0
-
+new_high: db "Congrlz, n00b! Nev lowZCoR!"
 buffer__: times 512 db 0
 
 times (512*15)-($-$$) db 0
