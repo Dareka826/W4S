@@ -24,13 +24,38 @@ setupVideoMode:
 ;color in al
 ;UNFINISHED
 drawRectangle:
-  mov bl, 0
-  int 10h
-  ret
+  pop ax
+  mov [endY], ax
+  pop ax
+  mov [endX], ax
+  pop ax
+  mov [startY], ax
+  pop ax
+  mov [startX], ax
   
+  .loop:
+    push ax
+    mov ax, [looper]
+    add ax, [startX]
+    cmp ax, [endX]
+    jge .end
+    mov ax, [looper]
+    inc ax
+    mov [looper], ax
+    pop ax
+    jmp .loop
+  .end:
+  
+  pop ax
+  ret
+startX: dw 0
+startY: dw 0
+endX: dw 0
+endY: dw 0
+looper: db 0
 ;VESA-Compliant video mode 1024x768
 ;I'm bot sure what's it, but Wikipedia says it makes graphics HD with 256 colors
-;Well that's not RGBA, but still, huge improvement over text mode...
+;Well, that's not RGBA, but still, it's huge improvement over text mode...
 setupVESA:
   mov ah, 0x4f02
   mov bx, 0x105
