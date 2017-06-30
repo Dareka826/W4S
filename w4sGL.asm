@@ -21,9 +21,11 @@ setupVideoMode:
 ;push [startY]
 ;push [endX]
 ;push [endY]
-;color in al
+;push [color]
 ;UNFINISHED
 drawRectangle:
+  pop ax
+  mov [color], ax
   pop ax
   mov [endY], ax
   pop ax
@@ -32,13 +34,27 @@ drawRectangle:
   mov [startY], ax
   pop ax
   mov [startX], ax
-  
+  xor ax, ax
   .loop:
     push ax
     mov ax, [looper]
     add ax, [startX]
     cmp ax, [endX]
     jge .end
+    mov cx, ax
+ .loop2:
+    push ax
+    mov ax, [looper2]
+    add ax, [startY]
+    cmp ax, [endY]
+    jge .endloop2
+    mov dx, ax
+    mov al, [color]
+    call drawPixel
+    pop ax
+    jmp .loop2
+ .endloop2:
+    pop ax
     mov ax, [looper]
     inc ax
     mov [looper], ax
@@ -53,6 +69,8 @@ startY: dw 0
 endX: dw 0
 endY: dw 0
 looper: db 0
+looper2: db 0
+color: db 0
 ;VESA-Compliant video mode 1024x768
 ;I'm bot sure what's it, but Wikipedia says it makes graphics HD with 256 colors
 ;Well, that's not RGBA, but still, it's huge improvement over text mode...
