@@ -1,4 +1,4 @@
-;Draws 1 pixel on screen
+;Draws pixel on screen
 ;cx - x
 ;dx - y
 ;al - color
@@ -8,8 +8,8 @@ drawPixel:
   int 10h
   ret
   
-;Init video mode
-;al - wanted video mode
+;Initialize video mode
+;al - video mode
 setupVideoMode:
   mov ah, 00h
   
@@ -72,7 +72,7 @@ looper: db 0
 looper2: db 0
 color: db 0
 ;VESA-Compliant video mode 1024x768
-;I'm bot sure what's it, but Wikipedia says it makes graphics HD with 256 colors
+;I'm not sure what's it, but Wikipedia says it makes graphics HD with 256 colors
 ;Well, that's not RGBA, but still, it's huge improvement over text mode...
 setupVESA:
   mov ax, 0x4f02
