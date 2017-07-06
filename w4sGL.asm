@@ -118,7 +118,7 @@ address: dw 0
 ;VESA-Compliant video mode 1024x768
 ;I'm not sure what's it, but Wikipedia says it makes graphics HD with 256 colors
 ;Well, that's not RGBA, but still, it's huge improvement over text mode...
-setupVESA:
+setupVesa:
   mov ax, 0x4f02
   mov bx, 0x105
   int 10h
