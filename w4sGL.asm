@@ -1,3 +1,9 @@
+;
+;
+;See license file "W4SGL License.txt"
+;
+;
+
 ;Draws pixel on screen
 ;cx - x
 ;dx - y
