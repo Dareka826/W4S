@@ -53,32 +53,32 @@ pop word [startX]
 mov cx, 0
 
 .loop:
-  cmp cx, [endX]
-  je .done
-  mov bx, 0
+ 	cmp cx, [endX]
+ 	je .done
+  	mov bx, 0
 .loop2:
 	cmp bx, [endY]
-  je .loop2Done
+  	je .loop2Done
 		   
 	pusha
-  mov al, [color]
+  	mov al, [color]
 	mov dx, bx
 	add dx, [startX]
 	add cx, [startY]
 	call drawPixel
 	popa	   
-  inc bx
-  jmp .loop2
+  	inc bx
+  	jmp .loop2
 .loop2Done:
-  inc ecx
-  jmp .loop
+  	inc ecx
+  	jmp .loop
 .done:	
 	mov bx, [oldsp]
 	mov sp, bx
 	xor bx, bx
 
 	push word 0
-  jmp [address]
+  	jmp [address]
 ;.error_X:
 ;	mov cx, [startX]
 ;	mov dx, [startY]
