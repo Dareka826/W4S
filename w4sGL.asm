@@ -29,32 +29,15 @@ setupVideoMode:
 ;push [endX]
 ;push [endY]
 ;push [color]
-;sp in ax
+;sp NO LONGER in ax
 ;FINISHED(???)
 drawRectangle:
 pop word [address] ;pop address to return to, that is pushed by 'call' and later used by 'ret'
-				   ;since this code changes 'sp', it's safer to store this address :) (like, it might get lost somewhere in memory)
-				   ;(even restoring 'sp' doesn't help enough)
-mov bx, sp
-mov [oldsp], bx
-xor bx, bx
-mov sp, ax ;restore stack
-
-
 pop word [color]
 pop word [endY]
 pop word [endX]
 pop word [startY]
 pop word [startX]
-
-
-;mov ax, [startX]
-;cmp ax, [endX]
-;jge .error_X
-;xor ax, ax
-;mov ax, [startY]
-;cmp ax, [endY]
-;jge .error_Y
 
 mov cx, 0
 
@@ -79,40 +62,13 @@ mov cx, 0
   	inc ecx
   	jmp .loop
 .done:	
-	mov bx, [oldsp]
-	mov sp, bx
-	xor bx, bx
-
 	push word 0
   	jmp [address]
-;.error_X:
-;	mov cx, [startX]
-;	mov dx, [startY]
-;	mov al, 0x4
-;	call drawPixel
-;	mov bx, [oldsp]
-;	mov sp, bx
-;	xor bx, bx
-;	push word 1
-;	jmp [address]
-;.error_Y:
-;	mov cx, [startX]
-;	mov dx, [startY]
-;	mov al, 0xc
-;	call drawPixel
-;	mov bx, [oldsp]
-;	mov sp, bx
-;	xor bx, bx
-;	push word 2
-;	jmp [address]
 
-oldsp: dw 0
 startX: dw 0
 startY: dw 0
 endX: dw 0
 endY: dw 0
-looper: dw 0
-looper2: dw 0
 color: dw 0
 address: dw 0
 ;VESA-Compliant video mode 1024x768
