@@ -1,8 +1,7 @@
-;
-;
-;See license file "W4SGL License.txt"
-;
-;
+;W4S Graphic Library
+;If you provide an original library developer (MarcinJXXXX) or a link to this file / repository / branch, you can do anything with W4SGL except for publishing it as your own project. 
+;You can do with this library what you want as long as you give it to the author.
+
 
 ;Draws pixel on screen
 ;cx - x
