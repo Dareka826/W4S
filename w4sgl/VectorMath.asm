@@ -36,12 +36,12 @@ times 2 dw 0
 iend
 mov word [.a1], ax
 mov word [.a2], bx
-mov ax, .a1.x
-mov bx, .a2.x
+mov ax, [.a1 + Vector2.x]
+mov bx, [.a2 + Vector2.x]
 add ax, bx
 
-mov cx, .a1.y
-mov dx, .a2.y
+mov cx, [.a1 + Vector2.y]
+mov dx, [.a2 + Vector2.y]
 add cx, dx
 
 mov bx, cx
