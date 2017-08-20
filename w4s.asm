@@ -177,6 +177,7 @@ PrintScore:
 	mov bx, scoree
 	mov cx, 10
 	mov dx, 4
+	call itoa_16
 	popa
 	mov si, scoree
 	call PrintString
