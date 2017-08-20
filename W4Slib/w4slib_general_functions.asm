@@ -23,34 +23,34 @@ itoa_16:
 		je case0
 casenot0:
       
-		mov byte [bx], '0'
-		mov bx, [p]
+        mov byte [bx], '0'
+	mov bx, [p]
   	inc bx
   	mov [p], bx 
 
    
- 	 	mov ax, [hmc]
- 	 	dec ax
- 	 	mov [hmc], ax
+ 	 mov ax, [hmc]
+ 	 dec ax
+ 	 mov [hmc], ax
    
-  	cmp ax, 0
-  		jne casenot0
-		jmp end_if
+  	 cmp ax, 0
+  	 jne casenot0
+	 jmp end_if
 case0:
 	loop0:
 
-   	mov bx, [p]
-   	inc bx
-  	mov [p], bx 
+   	        mov bx, [p]
+   	        inc bx
+  	        mov [p], bx 
    
-   	mov ax, [shifter]
-   	xor dx, dx
-   	mov bx, [base]
-   	idiv bx
-   	mov [shifter], ax
+           	mov ax, [shifter]
+   	        xor dx, dx
+   	        mov bx, [base]
+           	idiv bx
+   	        mov [shifter], ax
    
-   	cmp ax, 0
-   		jne loop0
+   	        cmp ax, 0
+   		        jne loop0
 end_if:
 	popa
 	pusha
