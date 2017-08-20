@@ -77,6 +77,6 @@ end_if:
 		mov byte [bx], cl
 		mov [i], ax
 		cmp ax, 0
-		jne loop0
+		jne loop1
 	popa
 	ret
