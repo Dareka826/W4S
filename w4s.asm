@@ -22,6 +22,7 @@ int 10h
 jmp main
 
 %include "highscores.asm"
+%include "W4Slib/w4slib_general_functions.asm"
 
 main:
 	call Load
@@ -171,44 +172,12 @@ Przegryw:
     dw 0xffff
 
 PrintScore:
-	mov dx, 0
+	pusha
 	mov ax, [score]
-	mov bx, 10
-	div bx
-	
-	mov cx, ax
-	mov al, '0'
-	add al, dl
-	mov [scoree+3], al
-	mov ax, cx
-	
-	mov dx, 0
-	div bx
-	
-	mov cx, ax
-	mov al, '0'
-	add al, dl
-	mov [scoree+2], al
-	mov ax, cx
-	
-	mov dx, 0
-	div bx
-	
-	mov cx, ax
-	mov al, '0'
-	add al, dl
-	mov [scoree+1], al
-	mov ax, cx
-	
-	mov dx, 0
-	div bx
-	
-	mov cx, ax
-	mov al, '0'
-	add al, dl
-	mov [scoree], al
-	mov ax, cx
-	
+	mov bx, scoree
+	mov cx, 10
+	mov dx, 4
+	popa
 	mov si, scoree
 	call PrintString
 	
