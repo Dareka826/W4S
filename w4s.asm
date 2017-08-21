@@ -1,6 +1,12 @@
 [bits 16]
 [org 0x7C00]
 
+mov ax, 0
+mov fs, ax
+mov gs, ax
+mov ss, ax
+mov es, ax
+
 mov ah, 2
 mov al, 5
 mov ch, 0
@@ -23,6 +29,8 @@ jmp main
 
 %include "highscores.asm"
 %include "W4Slib/w4slib_general_functions.asm"
+%include "print.asm"
+
 
 main:
 	call Load
@@ -84,9 +92,9 @@ mainLoop:
 	cmp al, 0
 	jne Przegryw
 	
-	mov al, [score]
-	inc al
-	mov [score], al
+	mov ax, [score]
+	inc ax
+	mov [score], ax
 	
 	mov al, 1
 	mov [whLeg], al
@@ -101,9 +109,9 @@ CheckPrawa:
 	jne Przegryw
 
 	
-	mov al, [score]
-	inc al
-	mov [score], al
+	mov ax, [score]
+	inc ax
+	mov [score], ax
 	
 	mov al, 0
 	mov [whLeg], al
@@ -176,9 +184,10 @@ PrintScore:
 	mov ax, [score]
 	mov bx, scoree
 	mov cx, 10
-	mov dx, 4
+	mov dx, 5
 	call itoa_16
 	popa
+	
 	mov si, scoree
 	call PrintString
 	
@@ -200,7 +209,7 @@ LogIn:
 	mov dl, 35
 	int 10h
 	
-	mov si, username	
+	mov si, username
 LogInLoop:
 	mov ah, 0
 	int 16h
@@ -210,7 +219,7 @@ LogInLoop:
 	
 	mov bx, si
 	sub bx, username
-	cmp bx, 9
+	cmp bx, 8
 	je LogInEnd
 	
 	mov [si], al 
@@ -302,8 +311,8 @@ LoadLoop:
 	int 10h
 	
 	mov ah, 0x86
-	mov cx, 0x3
-	mov dx, 0xD090
+	mov cx, 0x0
+	mov dx, 0x2000
 	int 15h
 	
 	mov ah, [loadProg]
@@ -316,8 +325,6 @@ LoadLoop:
 	jmp LoadLoop
 LoadEnd:
 	ret
-
-%include "print.asm"
 
 osName: db "Weed 4 Spacer OS 2018-1 v1.1-kwasy",234,"_3 [NonPremium]", 0
 
@@ -333,8 +340,8 @@ loadProg: db 0,0
 msg: db "U Weed To Spacer! With Ur legz", 0
 msg2: db "Ur score: ", 0
 
-score: db 0, 0
-scoree: db "0000", 0
+score: dw 0,0
+scoree: times 16 db 0
 legz: db "Lewa Noga     Prawa Noga", 0
 whLeg: db 0
 
