@@ -63,10 +63,18 @@ fPlay:
 	mov si, msg
 	call PrintString
 	
+
+mainLoop:
+
+	cmp byte [whLeg], 0
+		je .drawLeg1
+	jmp .drawLeg2
+.returnPoint:
+
 	mov ah, 2
 	mov bh, 0
-	mov dh, 11
-	mov dl, 32
+	mov dh, 12
+	mov dl, 36
 	int 10h
 	
 	mov si, msg2
@@ -74,24 +82,17 @@ fPlay:
 	
 	mov ah, 2
 	mov bh, 0
-	mov dh, 13
+	mov dh, 14
 	mov dl, 0
 	int 10h
 	
 	mov si, legz
 	call PrintString
-mainLoop:
+
 	mov ah, 2
 	mov bh, 0
-	mov dh, 11
-	mov dl, 42
-	int 10h
-	
-	mov ah, 9
-	mov al, ' '
-	mov bh, 0
-	mov bl, 0x1F
-	mov cx, 33
+	mov dh, 13
+	mov dl, 38
 	int 10h
 	
 	call PrintScore
@@ -112,8 +113,14 @@ mainLoop:
 	
 	mov al, 1
 	mov [whLeg], al
-	jmp AfterArrows
 	
+	jmp AfterArrows
+.drawLeg1:
+	call PrintLeftLeg
+	jmp .returnPoint
+.drawLeg2:
+	call PrintRightLeg
+	jmp .returnPoint
 CheckPrawa:
 	cmp ah, 0x4D
 	jne AfterArrows
@@ -131,7 +138,7 @@ CheckPrawa:
 	mov [whLeg], al
 	
 AfterArrows:
-	
+	call ClearScreen
 	jmp mainLoop
 
 Przegryw:
@@ -372,6 +379,20 @@ legz: db 27,"Lewa Noga"," "
 times 80 - 22 db " "
 db "Prawa Noga",26, 0
 whLeg: db 0
+
+rlEeG:
+.line1:	db	"               ",0
+.line2:	db	"  ",219,219,219,219,219,219,220,220,220,"    ",0
+.line3:	db	" ",219,219,219,219,219,219,219,219,219,219,219,219,220," ",0
+.line4: db 	"  ",219,219,219,223,223,219,219,219,219,219,219,223," ",0
+.line4end:
+
+llEeG:
+.line1:	db 	"               ",0
+.line2:	db	"    ",220,220,220,219,219,219,219,219,219,"  ",0
+.line3:	db	" ",220,219,219,219,219,219,219,219,219,219,219,219,219," ",0
+.line4:	db	" ",223,219,219,219,219,219,219,223,223,219,219,219,"  ",0
+.line4end:
 
 not_bat: db "Not bad... not bad...",0
 uluser: db "u LUZER!", 0

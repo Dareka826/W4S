@@ -114,3 +114,87 @@ LineChangeColorAttribute:
 	mov sp, bp
 	pop bp
 	ret 2
+
+PrintLeftLeg:
+	mov si, llEeG.line1
+	mov cx, 0
+.loop:
+	mov ah, 2
+	mov bh, 0
+	mov dh, cl
+	add dh, 4
+	push cx
+	mov dl, 0
+	int 10h
+	
+	call PrintString
+	
+	pop cx
+	inc cx
+	cmp cx, 4
+		jge .endLoop
+	jmp .loop
+.endLoop:
+PrintRightLeg2:
+	mov si, rlEeG.line1
+	mov cx, 0
+.loop:
+	mov ah, 2
+	mov bh, 0
+	mov dh, cl
+	add dh, 10
+	push cx
+	mov dl, 80 - (rlEeG.line4end - rlEeG.line4)
+	int 10h
+	
+	call PrintString
+	
+	pop cx
+	inc cx
+	cmp cx, 4
+		jge .endLoop
+	jmp .loop
+.endLoop:
+	ret
+	
+PrintRightLeg:
+	mov si, rlEeG.line1
+	mov cx, 0
+.loop:
+	mov ah, 2
+	mov bh, 0
+	mov dh, cl
+	add dh, 4
+	push cx
+	mov dl, 80 - (rlEeG.line4end - rlEeG.line4)
+	int 10h
+	
+	call PrintString
+	
+	pop cx
+	inc cx
+	cmp cx, 4
+		jge .endLoop
+	jmp .loop
+.endLoop:
+PrintLeftLeg2:
+	mov si, llEeG.line1
+	mov cx, 0
+.loop:
+	mov ah, 2
+	mov bh, 0
+	mov dh, cl
+	add dh, 10
+	push cx
+	mov dl, 0
+	int 10h
+	
+	call PrintString
+	
+	pop cx
+	inc cx
+	cmp cx, 4
+		jge .endLoop
+	jmp .loop
+.endLoop:
+	ret
