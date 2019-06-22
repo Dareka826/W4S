@@ -30,14 +30,28 @@ jmp main
 %include "highscores.asm"
 %include "W4Slib/w4slib_general_functions.asm"
 %include "print.asm"
+%include "mainmenu.asm"
+tmpBuffer: times 16 db 0
+
 
 
 main:
 	call Load
 	call ClearScreen
-	call LogIn
-	
-	
+	;call LogIn
+
+.mainmenu:	
+	call MainMenu
+
+	cmp ax, 0
+		je fPlay
+	cmp ax, 1
+		je fSpecial
+	cmp ax, 2
+		je fHighscores
+
+	jmp .mainmenu
+fPlay:
 	call ClearScreen
 	
 	mov ah, 2
@@ -61,7 +75,7 @@ main:
 	mov ah, 2
 	mov bh, 0
 	mov dh, 13
-	mov dl, 27
+	mov dl, 0
 	int 10h
 	
 	mov si, legz
@@ -325,11 +339,23 @@ LoadLoop:
 	jmp LoadLoop
 LoadEnd:
 	ret
+	
+fSpecial:
+	mov si, unimplemented
+	call PrintString
+	jmp $
+	
+fHighscores:
+	mov si, unimplemented
+	call PrintString
+	jmp $
 
-osName: db "Weed 4 Spacer OS 2018-1 v1.1-kwasy",234,"_3 [NonPremium]", 0
+osName: db "Weed 4 Spacer OS 2020-1 v1.6-kwasy",234,"_3 [NonPremium]", 0
 
 logoz: db "By MB", 0
 logoz2: db "& MJX", 0
+
+unimplemented: db "Error: unimplemented function",0xd,0xa,0
 
 unamemsg: db "Username", 0
 username: db "         ", 0
@@ -342,7 +368,9 @@ msg2: db "Ur score: ", 0
 
 score: dw 0,0
 scoree: times 16 db 0
-legz: db "Lewa Noga     Prawa Noga", 0
+legz: db 27,"Lewa Noga"," "
+times 80 - 22 db " "
+db "Prawa Noga",26, 0
 whLeg: db 0
 
 not_bat: db "Not bad... not bad...",0
