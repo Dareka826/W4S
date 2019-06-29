@@ -38,7 +38,7 @@ tmpBuffer: times 16 db 0
 main:
 	call Load
 	call ClearScreen
-	;call LogIn
+	call LogIn
 
 .mainmenu:	
 	call MainMenu
@@ -353,11 +353,42 @@ fSpecial:
 	jmp $
 	
 fHighscores:
-	mov si, unimplemented
+	call ClearScreen
+	
+	mov si, urhighscore
 	call PrintString
-	jmp $
+	
+	call LoadHighScoresLocal
+	mov ax, [LoadHighScoresLocal.def]
+	mov bx, highscoreBuffer+37
+	mov cx, 10
+	mov dx, 5
+	call itoa_16
+	
+	mov si, highscoreBuffer
+	call PrintString
+	
+	mov si, Paktc
+	call PrintString
+	mov ah, 0
+	int 16h
+	jmp main.mainmenu
 
+tempScore: dw 0
+highscoreBuffer: times 80 db ' '
+					db 0xa,0xd,0
+					
 osName: db "Weed 4 Spacer OS 2020-1 v1.6-kwasy",234,"_3 [NonPremium]", 0
+
+Paktc: 	times (80 - (.msgEnd - .msg)) / 2 + 1 db ' '
+.msg: db "Press any key to continue..."
+.msgEnd: times (80 - (.msgEnd - .msg)) / 2 - 1 db ' '
+db 0xd,0xa,0
+
+urhighscore: 	times (80 - (.msgEnd - .msg)) / 2 + 1 db ' '
+.msg: db "ur highscore"
+.msgEnd: times (80 - (.msgEnd - .msg)) / 2 - 1 db ' '
+db 0xd,0xa,0
 
 logoz: db "By MB", 0
 logoz2: db "& MJX", 0
