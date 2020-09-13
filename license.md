@@ -1,6 +1,6 @@
 # LICENSE
 
-You're allowed to do anything with this operating system, but if you redistribute it, fork it, modify it, etc. you must add information about original authors (or just add link to this repository, https://github.com/MB2017/W4S/).
+You're allowed to do anything with this operating system, but if you redistribute it, fork it, modify it, etc. you must add information about original authors (or just add link to this repository, https://github.com/Dareka826/W4S/).
 
 # NO WARRANTY
 
